@@ -1,29 +1,52 @@
 #include "gtest/gtest.h"
-#include "../include/Hailstone.h"
-using sequence::satisfiesHailstone;
+#include "../include/Awards.h"
+#include "gmock/gmock.h"
+#include <string>
+#include <vector>
+#include <iostream>
+using ::testing::InSequence;
+
+using awards::RankList;
+using awards::AwardCeremonyActions;
+using awards::performAwardCeremony;
+using namespace std;
 
 
-//TEST(TriangleTests, testPerimeter) {
-//    Triangle *aTriangle = new Triangle(3,3,3);
-//    EXPECT_EQ (aTriangle->getPerimeter(),9);
-//}
+class stubRankList : public RankList {
+	public:
+		stubRankList() : names({"Person1","Person2","Person3", "Person4"}), index(0) {}
 
-TEST(HailstoneTests, testZero) {
-	EXPECT_FALSE(satisfiesHailstone(0));
-}
+		string getNext() override {
+			if (index >= names.size()) {
+				return "";
+				cout << index << endl;
+			}
+		return names[index++];
+		}
+	private:
+		std::vector<std::string> names;
+		int index;
+};
 
-TEST(HailstoneTests, testOne) {
-	EXPECT_TRUE(satisfiesHailstone(1));
-}
+class MockAwards : public AwardCeremonyActions {
+	    public: 
+	        MOCK_METHOD(void, playAnthem, (), (override));
+		MOCK_METHOD(void, awardBronze, (string), (override));
+		MOCK_METHOD(void, awardSilver, (string), (override));
+		MOCK_METHOD(void, awardGold, (string), (override));
+		MOCK_METHOD(void, turnOffTheLightsAndGoHome, (), (override));
+};
 
-TEST(HailstoneTests, testEven) {
-	EXPECT_TRUE(satisfiesHailstone(4));
-}
-
-TEST(HailstoneTests, testOdd) {
-	EXPECT_TRUE(satisfiesHailstone(3));
-}
-
-TEST(HailstoneTests, testNegative) {
-	EXPECT_FALSE(satisfiesHailstone(-1));
+TEST(AwardsTests, testingAwardsTest) {
+	MockAwards awards;
+	stubRankList recipients;
+	{
+	InSequence sequence;
+	EXPECT_CALL(awards,playAnthem);
+	EXPECT_CALL(awards, awardBronze("Person1"));
+	EXPECT_CALL(awards, awardSilver("Person2"));
+	EXPECT_CALL(awards, awardGold("Person3"));
+	EXPECT_CALL(awards, turnOffTheLightsAndGoHome);
+	}
+	performAwardCeremony(recipients, awards);
 }
