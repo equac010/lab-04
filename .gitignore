@@ -1,8 +1,8 @@
 CMakeCache.txt
 CMakeFiles/
-Makefile
-bin/
 cmake_install.cmake
+bin/
+Makefile
 lib/CMakeFiles/
 lib/Makefile
 lib/cmake_install.cmake

@@ -1,49 +1,29 @@
 #include "gtest/gtest.h"
-#include "../include/Triangle.h"
-using shapes::Triangle;
+#include "../include/Hailstone.h"
+using sequence::satisfiesHailstone;
 
 
-TEST(TriangleTests, testPerimeter) {
-    Triangle *aTriangle = new Triangle(3,3,3);
-    EXPECT_EQ (aTriangle->getPerimeter(),9);
+//TEST(TriangleTests, testPerimeter) {
+//    Triangle *aTriangle = new Triangle(3,3,3);
+//    EXPECT_EQ (aTriangle->getPerimeter(),9);
+//}
+
+TEST(HailstoneTests, testZero) {
+	EXPECT_FALSE(satisfiesHailstone(0));
 }
 
-//Tests that should fail
-TEST(TriangleTests, testArea1) {
-	Triangle *aTriangle = new Triangle(5,4,3);
-	EXPECT_EQ (aTriangle->getArea(),5);
+TEST(HailstoneTests, testOne) {
+	EXPECT_TRUE(satisfiesHailstone(1));
 }
 
-TEST(TriangleTests, testPerimeter1) {
-	Triangle *aTriangle = new Triangle(6,5,4);
-	EXPECT_EQ (aTriangle->getPerimeter(),15);
+TEST(HailstoneTests, testEven) {
+	EXPECT_TRUE(satisfiesHailstone(4));
 }
 
-TEST(TriangleTests, testArea2) {
-	Triangle *aTriangle = new Triangle(50,40,30);
-	EXPECT_EQ (aTriangle->getArea(),60);
+TEST(HailstoneTests, testOdd) {
+	EXPECT_TRUE(satisfiesHailstone(3));
 }
 
-//Tests that should pass
-TEST(TriangleTests, testPerimeter3) {
-	Triangle *aTriangle = new Triangle(3,3,3);
-	EXPECT_EQ(aTriangle->getPerimeter(), 9);
-}
-TEST(TriangleTests, testPerimeter4) {
-	Triangle *aTriangle = new Triangle(4,4,4);
-	EXPECT_EQ(aTriangle->getPerimeter(), 12);
-}
-TEST(TriangleTests, testPerimeter5) {
-	Triangle *aTriangle = new Triangle(7,7,7);
-	EXPECT_EQ(aTriangle->getPerimeter(), 21);
-}
-TEST(TriangleTests, testPerimeter6) {
-	Triangle *aTriangle = new Triangle(5,5,5);
-	EXPECT_EQ(aTriangle->getPerimeter(), 15);
-}
-
-//Expect Death
-TEST(TriangleTests, testDeath) {
-	Triangle *aTriangle = new Triangle(1,1,-1);
-	EXPECT_DEATH(aTriangle->getArea(), "Null Area");
+TEST(HailstoneTests, testNegative) {
+	EXPECT_FALSE(satisfiesHailstone(-1));
 }
