@@ -43,6 +43,7 @@ TEST(TriangleTests, testPerimeter6) {
 }
 
 //Expect Death
+
 TEST(TriangleTests, testDeath) {
 	Triangle *aTriangle = new Triangle(1,1,-1);
 	EXPECT_DEATH(aTriangle->getArea(), "Null Area");
